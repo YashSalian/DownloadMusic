@@ -26,5 +26,10 @@ for (( i = 1 ; i <= $count ; i++ )); do
 		mkdir "$dir"
 	fi
 	cd "$dir"
-	yt-dlp -x --progress --no-warnings -q --audio-quality 0 --embed-thumbnail "$template$curr_id" && cd ..
+	yt-dlp -x --progress --no-warnings -q --audio-quality 0 --embed-thumbnail "$template$curr_id"
+	for file in *.m4a; do
+		renamed_file=$(echo "$file" | sed 's/ \[[^]]*\]//g') # | sed 's/ /\\ /g')
+		mv "$file" "$renamed_file"
+	done
+	cd ..
 done
